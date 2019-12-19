@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Recognition</title>
+    <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/index.less"/>
+    <link rel="stylesheet" href="index.less"/>
+</head>
+<body>
+<section id="loading-cover" class="loading-wrapper hidden" style="z-index:10;background: rgba(102,102,102,0.6)">
+    <img src="/assets/logo.png"/>
+    <div class="loading-text">Cal-culator</div>
+</section>
+<section class="loading-wrapper">
+    <img src="/assets/logo.png"/>
+    <div class="loading-text">Cal-culator</div>
+</section>
+<section class="recognition-content">
+    <header>
+        <div class="header-logo">
+            <div class="header-item">
+                <img src="/assets/logo.png"/>
+                <div style="margin-left: .5em;font-size: 1.2em">Cal-culator</div>
+            </div>
+            <div class="header-item">
+                <div class="navigation active">Recognition</div>
+                <a class="navigation" href="/record/index.html">Record</a>
+                <a class="navigation" href="/recommendation/index.html">Recommendation</a>
+            </div>
+        </div>
+    </header>
+    <section class="recognition-wrapper">
+        <div class="file-upload">
+            <div class="image-upload-wrap">
+                <input id="upload" class="file-upload-input" type='file' accept="image/png"/>
+                <div class="drag-text">
+                    <h3>Place your food image here to start recognition</h3>
+                </div>
+            </div>
+            <div class="file-upload-content">
+                <canvas class="recognition-canvas" id="recognition-canvas"></canvas>
+                <img class="file-upload-image" src="/assets/breakfast.jpg" alt="your image"/>
+            </div>
+        </div>
+        <div class="recognition-result">
+            <div class="recognition-item">
+                <div class="title">Meal Type</div>
+                <div class="radio-tile-group">
+                    <div class="input-container">
+                        <input id="breakfast" class="radio-button" type="radio" name="meal" checked/>
+                        <div class="radio-tile">
+                            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjUxMnB4IiB2aWV3Qm94PSIwIDAgNTggNTAiIHdpZHRoPSI1MTJweCI+PGcgaWQ9IlBhZ2UtMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48ZyBpZD0iMDA4LS0tQ29mZmVlLWFuZC1Dcm9pc3NhbnQiIGZpbGwtcnVsZT0ibm9uemVybyI+PHBhdGggaWQ9IlNoYXBlIiBkPSJtMzMuODMgNDAuMjFjLTEuODkyMDczIDIuMzk1NTE1Mi00Ljc3NzM4OTggMy43OTIxMTE4LTcuODMgMy43OWgtNmMtNC42NTQ2Nzg4LS4wMDE2Ny04LjY5MjY5NzUtMy4yMTQ2NzI1LTkuNzQtNy43NS0uMTczMTE1My0uNzM3NDY5LS4yNjAzNjE1My0xLjQ5MjQ4NDctLjI2LTIuMjV2LTE3YzAtLjU1MjI4NDcuNDQ3NzE1My0xIDEtMWgyNGMuNTUyMjg0NyAwIDEgLjQ0NzcxNTMgMSAxdjEyLjA4eiIgZmlsbD0iI2YzZDU1YiIvPjxwYXRoIGlkPSJTaGFwZSIgZD0ibTEwIDE5Ljc0Yy0xLjIxMzcyMTEyLS41MDIzNTU2LTIuNTE2NTAwMDEtLjc1NDA2NzUtMy44My0uNzQtNi4xNyAwLTYuMTcgNi44OC02LjE3IDkuNDcgMCA1LjI2IDIuMzYgOC41MyA2LjE3IDguNTMgMS4zOTYzNDk2Ny0uMDEyNjE3MSAyLjc4MDAyNi0uMjY2MzQ3NSA0LjA5LS43NWwtLjI2LTQuMjRjLTEuMTgxMzE0MDYuNjI1OTE2LTIuNDkzMzQzMTQuOTY1MDU2Ny0zLjgzLjk5LTIuMDEgMC0yLjE3LTMuNDctMi4xNy00LjUzIDAtNC42Mi43My01LjQ3IDIuMTctNS40NyAxLjQyODg2NjQzLS4wNjA4MzcyIDIuODE3OTAyNTYuNDc5NTQ1IDMuODMgMS40OXoiIGZpbGw9IiNmMGM0MTkiLz48cGF0aCBpZD0iU2hhcGUiIGQ9Im01Ni4zOTMgMjIuMDQxYy0uNTU4LTIuOTg1LTEuNjYxLTYuNjcyLTMuNTYtNS45NDktMi41MzYuOTY2LTEuNTc4IDMuNjUxLTEuOTU5IDYuNDI0eiIgZmlsbD0iI2E1NmE0MyIvPjxwYXRoIGlkPSJTaGFwZSIgZD0ibTI4Ljc0NCAzMi41NjljLTEuMzUyLTIuNjgzLTIuNy02LjI3NS0uODA2LTcgMi41MzYtLjk2NiAzLjQgMS43NTUgNS4zNTQgMy42NHoiIGZpbGw9IiNhNTZhNDMiLz48cGF0aCBpZD0iU2hhcGUiIGQ9Im0zMSA1MGgtMjIuOTVjLTIuMjQxIDAtNC4wNS0xLjM0LTQuMDUtM3YtMmMwLS41NS42MDgtMSAxLjM1LTFoNTEuM2MuNzQyIDAgMS4zNS40NSAxLjM1IDF2MmMwIDEuNjYtMS44MDkgMy00LjA1IDN6IiBmaWxsPSIjNjdiOWNjIi8+PGcgZmlsbD0iI2JkYzNjNyI+PHBhdGggaWQ9IlNoYXBlIiBkPSJtMjIgMTJjLS41NTIyODQ3IDAtMS0uNDQ3NzE1My0xLTEtLjAwODgxMzEtMS4xNTkzMjk0OS40Mjc1MDE3LTIuMjc3ODU1OTUgMS4yMTktMy4xMjUuNDk5OTA2OS0uNDk1ODgzMDMuNzgxMDkyNS0xLjE3MDg2NDQyLjc4MTA5MjUtMS44NzVzLS4yODExODU2LTEuMzc5MTE2OTctLjc4MTA5MjUtMS44NzVjLS43OTE0OTgzLS44NDcxNDQwNS0xLjIyNzgxMzEtMS45NjU2NzA1MS0xLjIxOS0zLjEyNSAwLS41NTIyODQ3NS40NDc3MTUzLTEgMS0xczEgLjQ0NzcxNTI1IDEgMWMtLjAwNjYzNjMuNzA1NDI3OTcuMjc1NTQzMyAxLjM4Mjg3NTguNzgxIDEuODc1IDEuNjI1Mzc1NyAxLjc2NjMxMTc4IDEuNjI1Mzc1NyA0LjQ4MzY4ODIyIDAgNi4yNS0uNTA1NDU2Ny40OTIxMjQyLS43ODc2MzYzIDEuMTY5NTcyLS43ODEgMS44NzUgMCAuNTUyMjg0Ny0uNDQ3NzE1MyAxLTEgMXoiLz48cGF0aCBpZD0iU2hhcGUiIGQ9Im0xNiAxMmMtLjU1MjI4NDcgMC0xLS40NDc3MTUzLTEtMS0uMDA4ODEzMS0xLjE1OTMyOTQ5LjQyNzUwMTctMi4yNzc4NTU5NSAxLjIxOS0zLjEyNS40OTk5MDY5LS40OTU4ODMwMy43ODEwOTI1LTEuMTcwODY0NDIuNzgxMDkyNS0xLjg3NXMtLjI4MTE4NTYtMS4zNzkxMTY5Ny0uNzgxMDkyNS0xLjg3NWMtLjc5MTQ5ODMtLjg0NzE0NDA1LTEuMjI3ODEzMS0xLjk2NTY3MDUxLTEuMjE5LTMuMTI1IDAtLjU1MjI4NDc1LjQ0NzcxNTMtMSAxLTFzMSAuNDQ3NzE1MjUgMSAxYy0uMDA2NjM2My43MDU0Mjc5Ny4yNzU1NDMzIDEuMzgyODc1OC43ODEgMS44NzUgMS42MjUzNzU3IDEuNzY2MzExNzggMS42MjUzNzU3IDQuNDgzNjg4MjIgMCA2LjI1LS41MDU0NTY3LjQ5MjEyNDItLjc4NzYzNjMgMS4xNjk1NzItLjc4MSAxLjg3NSAwIC41NTIyODQ3LS40NDc3MTUzIDEtMSAxeiIvPjxwYXRoIGlkPSJTaGFwZSIgZD0ibTI4IDEyYy0uNTUyMjg0NyAwLTEtLjQ0NzcxNTMtMS0xLS4wMDg4MTMxLTEuMTU5MzI5NDkuNDI3NTAxNy0yLjI3Nzg1NTk1IDEuMjE5LTMuMTI1LjQ5OTkwNjktLjQ5NTg4MzAzLjc4MTA5MjUtMS4xNzA4NjQ0Mi43ODEwOTI1LTEuODc1cy0uMjgxMTg1Ni0xLjM3OTExNjk3LS43ODEwOTI1LTEuODc1Yy0uNzkxNDk4My0uODQ3MTQ0MDUtMS4yMjc4MTMxLTEuOTY1NjcwNTEtMS4yMTktMy4xMjUgMC0uNTUyMjg0NzUuNDQ3NzE1My0xIDEtMXMxIC40NDc3MTUyNSAxIDFjLS4wMDY2MzYzLjcwNTQyNzk3LjI3NTU0MzMgMS4zODI4NzU4Ljc4MSAxLjg3NSAxLjYyNTM3NTcgMS43NjYzMTE3OCAxLjYyNTM3NTcgNC40ODM2ODgyMiAwIDYuMjUtLjUwNTQ1NjcuNDkyMTI0Mi0uNzg3NjM2MyAxLjE2OTU3Mi0uNzgxIDEuODc1IDAgLjU1MjI4NDctLjQ0NzcxNTMgMS0xIDF6Ii8+PC9nPjxwYXRoIGlkPSJTaGFwZSIgZD0ibTU0Ljc4OCAzNS40MjRoLjAwN2MxLjI3NjI0MDMtMS43Mzg3ODc3IDIuMjIyODg4Ni0zLjY5NjgyMDkgMi43OTMtNS43NzcuNDMwODAxOS0yLjA3MTI2MjIuNTI4MzYxNi00LjE5Nzk5NTQuMjg5LTYuMy0uMDgzNjgxMy0uNzUyMDg5Mi0uNzI3NDM5NC0xLjMxNjAyODMtMS40ODQtMS4zLS4wMSAwLS4wMjYgMC0uMDQ0IDAtMS44MzQ4NDUxLjAxMDg3MjQtMy42NjU4MDg1LjE3MDA1NzYtNS40NzUuNDc2LS4yLjAzMS0uNC4wNjEtLjYwNy4xLS42NjY4NjU2LjEyMDU2OTQtMS4yMTM5NTk3LjU5NzAyMTItMS40MjUgMS4yNDEtLjMzNDQ4MTcuOTYwMzIyNS0uODM4MDgyNyAxLjg1MzA1NDUtMS40ODcgMi42MzZ6IiBmaWxsPSIjY2I4MjUyIi8+PHBhdGggaWQ9IlNoYXBlIiBkPSJtMzcuOTc2IDQxLjgyNmMtMi4wMjE2NjItLjQ4MTEwOTQtMy45MjgyMzEtMS4zNTcyNDc1LTUuNjEtMi41NzgtMS41ODMwNTc3LTEuMzIyODYxNC0yLjkzMTkzNDctMi45MDI5NzQ0LTMuOTktNC42NzQtLjM3NzEwNjctLjY2Nzk0MjEtLjIyMjE2MTYtMS41MTAwMzUzLjM2OC0yIDAtLjAxMS4wMjEtLjAxNy4wMzQtLjAzMSAxLjQxNjI1ODEtMS4yMjQxOTkgMi45MjU0NjM3LTIuMzM2NTQ0MyA0LjUxNC0zLjMyNy4xNzMtLjExMi4zNDYtLjIyNC41MjktLjMzLjU2MjcwOTctLjM1NjE2OTEgMS4yODAyOTAzLS4zNTYxNjkxIDEuODQzIDAgLjgzMzk3MDguNTE4MzE0NiAxLjc2MDMxMzQuODcwNDQ3IDIuNzI4IDEuMDM3eiIgZmlsbD0iI2NiODI1MiIvPjxwYXRoIGlkPSJTaGFwZSIgZD0ibTQxLjE5IDQ0Yy0uODMxMjgyLS4wMzQ2NzgtMS42NTMxNTM1LS4xODk2MjEtMi40NC0uNDYtLjI2ODE0ODMtLjA5NTQ2NjItLjQ2ODM1ODYtLjMyMjExOTQtLjUzLS42LS4wNi0uMjYtLjE1LS42NC0uMjQtMS4xMS0uNTUtMi44Ny0xLjMzLTkuMTkgMS4zMi0xMy45NC4wOTc4NDMzLS4xNzQxMTk1LjI1MzQ5MjgtLjMwODU0NC40NC0uMzhsMi41Ny0uOTggMi41Ni0uOThjLjE4Njk5MzgtLjA3MDAxODMuMzkzMDA2Mi0uMDcwMDE4My41OCAwIDUuNjcgMi4xOCA5LjA1IDkuMTQgOS44MiAxMC44OS4xMTk3OTc3LjI2ODI0NTEuMTAxMTMzMS41NzgwNzYtLjA1LjgzLS41OSAxLjAyLTIuNTIgMy42OC03LjQyIDUuNTUtMS42NjY1MTA1LjY1NjEzNDEtMy40MjM0MDk1IDEuMDU0MDQ5OC01LjIxIDEuMTgiIGZpbGw9IiNjZjk3NmEiLz48L2c+PC9nPjwvc3ZnPgo="/>
+                            <label for="breakfast" class="radio-tile-label">Breakfast</label>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="lunch" class="radio-button" type="radio" name="meal"/>
+                        <div class="radio-tile">
+                            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ2NCA0NjQiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDQ2NCA0NjQ7IiB4bWw6c3BhY2U9InByZXNlcnZlIiB3aWR0aD0iNTEycHgiIGhlaWdodD0iNTEycHgiPgo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNEOUQ5RDk7IiBjeD0iMjMyIiBjeT0iMjMyIiByPSIyMzIiLz4KPGNpcmNsZSBzdHlsZT0iZmlsbDojRjdFNEJBOyIgY3g9IjIzMiIgY3k9IjIzMiIgcj0iMTYwIi8+CjxwYXRoIHN0eWxlPSJmaWxsOiM2Qjk3Nzc7IiBkPSJNNjMuNDgsMTc1Ljg4Yy0wLjM0OCw0LjIxLDAuMTQ3LDguNDQ3LDEuNDU2LDEyLjQ2NGMtMjMuOTY0LDYuNjcxLTM3Ljk4MiwzMS41MDUtMzEuMzExLDU1LjQ2OSAgYzMuNDgzLDEyLjUxMywxMi4yLDIyLjkxMywyMy45MTEsMjguNTMxYy0xLjk5MiwzLjcxOS0zLjIyMSw3Ljc5OS0zLjYxNiwxMmMtMS4xMDIsMTkuMDI3LDEzLjQwNywzNS4zNTQsMzIuNDMyLDM2LjQ5NiAgYzUuMzY1LDAuNDQ0LDEwLjc2My0wLjI4NywxNS44MTYtMi4xNDRMMTI4LjQ5NiwyNDlMMTI4LDE5MmwtMTAuOTc2LTQxLjQ4Yy00LjY0OS0yLjcyLTkuODM3LTQuMzkxLTE1LjItNC44OTYgIEM4Mi44ODQsMTQzLjQwMyw2NS43MjUsMTU2Ljk0Myw2My40OCwxNzUuODh6Ii8+CjxwYXRoIHN0eWxlPSJmaWxsOiNFQkVCRUI7IiBkPSJNMzg0LDExMmMwLjA1OC0xNy42MTYtMTQuMTc2LTMxLjk0My0zMS43OTEtMzJjLTExLjcyNy0wLjAzOC0yMi41MjksNi4zNjEtMjguMTI5LDE2LjY2NCAgYy0zOS41MzItMjAuMDg2LTg3Ljg2MS00LjMyMS0xMDcuOTQ3LDM1LjIxMXMtNC4zMjEsODcuODYxLDM1LjIxMSwxMDcuOTQ3czg3Ljg2MSw0LjMyMSwxMDcuOTQ3LTM1LjIxMSAgYzkuOTA2LTE5LjQ5NiwxMS40My00Mi4xODksNC4yMjEtNjIuODM1QzM3NS44NDEsMTM3LjA0MiwzODMuOTg0LDEyNS4yMDcsMzg0LDExMkwzODQsMTEyeiIvPgo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNGQkI1NDA7IiBjeD0iMjgwIiBjeT0iMTY4IiByPSIzNiIvPgo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNGN0JBNjE7IiBjeD0iMTYwIiBjeT0iMzIwIiByPSI4MCIvPgo8Zz4KCTxjaXJjbGUgc3R5bGU9ImZpbGw6I0RDNEQ0MTsiIGN4PSIxMjAiIGN5PSIyMTUuOTkyIiByPSIzMiIvPgoJPGNpcmNsZSBzdHlsZT0iZmlsbDojREM0RDQxOyIgY3g9IjEyNC44OCIgY3k9IjE0OS40MzIiIHI9IjMyIi8+CjwvZz4KPGc+Cgk8cGF0aCBzdHlsZT0iZmlsbDojOEY1NjNCOyIgZD0iTTM5OC40NTYsMjY1LjI2NGMtNC40MTgsMC4wMDItOC4wMDItMy41NzgtOC4wMDQtNy45OTZjMC0wLjMwNiwwLjAxNy0wLjYxMiwwLjA1Mi0wLjkxNiAgIGw0Ljc0NC00MS4yNjRjMC41LTQuMzksNC40NjQtNy41NDMsOC44NTQtNy4wNDNjMS40MzUsMC4xNjMsMi43OTgsMC43MTIsMy45NDYsMS41ODdsMzYuOCwyOCAgIGMzLjUxNiwyLjY3NSw0LjE5OCw3LjY5NSwxLjUyMiwxMS4yMTFjLTAuOTkyLDEuMzA0LTIuMzYyLDIuMjcyLTMuOTIyLDIuNzczbC00MS41NTIsMTMuMjggICBDNDAwLjEwOCwyNjUuMTQ5LDM5OS4yODQsMjY1LjI3NCwzOTguNDU2LDI2NS4yNjRMMzk4LjQ1NiwyNjUuMjY0eiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6IzhGNTYzQjsiIGQ9Ik0yNjEuMjk2LDQ0Mi40NzJjLTIuNjg2LTAuMDAxLTUuMTkyLTEuMzUxLTYuNjcyLTMuNTkybC0yMi45MzYtMzQuNjMyICAgYy0yLjQ0LTMuNjg0LTEuNDMxLTguNjQ4LDIuMjUyLTExLjA4N2MxLjE5OS0wLjc5NCwyLjU5MS0xLjI1MSw0LjAyOC0xLjMyMWw0Ni4xODQtMi4yNzJjNC40MTMtMC4yMTUsOC4xNjUsMy4xODgsOC4zOCw3LjYwMSAgIGMwLjA4LDEuNjQzLTAuMzQ5LDMuMjcyLTEuMjI4LDQuNjYzbC0yMy4yLDM2LjkwNGMtMS40NDYsMi4yOTYtMy45NTgsMy43MDMtNi42NzIsMy43MzZIMjYxLjI5NnoiLz4KPC9nPgo8Zz4KCTxwYXRoIHN0eWxlPSJmaWxsOiNGMjZCMzI7IiBkPSJNMTc2LDI4MGgxNnYxNmgtMTZWMjgweiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6I0YyNkIzMjsiIGQ9Ik0yMDAsMzA0aDE2djE2aC0xNlYzMDR6Ii8+Cgk8cGF0aCBzdHlsZT0iZmlsbDojRjI2QjMyOyIgZD0iTTE3NiwzMzZoMTZ2MTZoLTE2VjMzNnoiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiNGMjZCMzI7IiBkPSJNMTEyLDMzNmgxNnYxNmgtMTZWMzM2eiIvPgoJPHBhdGggc3R5bGU9ImZpbGw6I0YyNkIzMjsiIGQ9Ik0xMjgsMjgwaDE2djE2aC0xNlYyODB6Ii8+Cgk8cGF0aCBzdHlsZT0iZmlsbDojRjI2QjMyOyIgZD0iTTE0NCwzNjBoMTZ2MTZoLTE2VjM2MHoiLz4KCTxwYXRoIHN0eWxlPSJmaWxsOiNGMjZCMzI7IiBkPSJNMTQ0LDMxMmgxNnYxNmgtMTZWMzEyeiIvPgo8L2c+CjxwYXRoIHN0eWxlPSJmaWxsOiM4RjU2M0I7IiBkPSJNMjk5LjU3Niw0MTAuMjE2Yy04LjQzNywwLjAxMy0xNi40NDItMy43MzEtMjEuODQtMTAuMjE2bC0wLjA1Ni0wLjA2NCAgYy0xMC4yMTUtMTIuMTkyLTguNjExLTMwLjM1NywzLjU4MS00MC41NzJjMC43MzQtMC42MTUsMS40OTktMS4xOTMsMi4yOTEtMS43MzJsMTguMjE2LTE0Ljg3MiAgYzIwLjMzNi0xNi41NTUsMzYuODczLTM3LjI5LDQ4LjQ4OC02MC44bDguMjI0LTE2LjU3NmM2LjU2OC0xNS4wNjIsMjQuMTAyLTIxLjk0OCwzOS4xNjQtMTUuMzhzMjEuOTQ4LDI0LjEwMiwxNS4zOCwzOS4xNjRsMCwwICBsLTEwLjk3NiwyMy4xNDRjLTE0LjIxNCwyOS45MDktMzUuNjEsNTUuODM1LTYyLjI4LDc1LjQ2NGwtMjQuNDA4LDE3Ljg5NkMzMTAuNjIsNDA4LjYxNywzMDUuMTU2LDQxMC4xOSwyOTkuNTc2LDQxMC4yMTYgIEwyOTkuNTc2LDQxMC4yMTZ6Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="/>
+                            <label for="lunch" class="radio-tile-label">Lunch</label>
+                        </div>
+                    </div>
+                    <div class="input-container">
+                        <input id="dinner" class="radio-button" type="radio" name="meal"/>
+                        <div class="radio-tile">
+                            <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDUxMy40MjEgNTEzLjQyMSIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEzLjQyMSA1MTMuNDIxOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjUxMnB4IiBoZWlnaHQ9IjUxMnB4Ij4KPGNpcmNsZSBzdHlsZT0iZmlsbDojQ0RENkUwOyIgY3g9IjI1Ni43MSIgY3k9IjI1Ni4xMzciIHI9IjI1NiIvPgo8Y2lyY2xlIHN0eWxlPSJmaWxsOiNBQ0IzQkE7IiBjeD0iMjU2LjcxIiBjeT0iMjU2LjEzNyIgcj0iMTg0LjUzMyIvPgo8cGF0aCBzdHlsZT0iZmlsbDojRjJGMkYyOyIgZD0iTTI2NC4xNzcsMC4xMzdjLTUuMzMzLDAtOC41MzMsNS4zMzMtOC41MzMsOS42djk3LjA2N2MwLDUuMzMzLTQuMjY3LDkuNi05LjYsOS42ICBjLTUuMzMzLDAtOS42LTQuMjY3LTkuNi05LjZWOS43MzdjMC01LjMzMy0zLjItOS42LTguNTMzLTkuNmMtNS4zMzMtMS4wNjctMTAuNjY3LDQuMjY3LTEwLjY2Nyw5LjZ2OTcuMDY3ICBjMCw1LjMzMy00LjI2Nyw5LjYtOS42LDkuNmwwLDBjLTUuMzMzLDAtOS42LTQuMjY3LTkuNi05LjZWOS43MzdjMC01LjMzMy0zLjItOS42LTguNTMzLTkuNmMtNS4zMzMtMS4wNjctMTAuNjY3LDQuMjY3LTEwLjY2Nyw5LjYgIHY5Ny4wNjdjMCw1LjMzMy00LjI2Nyw5LjYtOS42LDkuNmwwLDBjLTUuMzMzLDAtOS42LTQuMjY3LTkuNi05LjZWOS43MzdjMC01LjMzMy0zLjItOS42LTguNTMzLTkuNiAgYy01LjMzMy0xLjA2Ny0xMC42NjcsNC4yNjctMTAuNjY3LDkuNnYxMDcuNzMzYzAsMTguMTMzLDcuNDY3LDM0LjEzMywxOS4yLDQ2LjkzM2MxOS4yLDE5LjIsMjkuODY3LDQ1Ljg2NywyNy43MzMsNzIuNTMzICBsLTIxLjMzMywyMzAuNGMwLDIuMTMzLDAsNS4zMzMsMCw3LjQ2N2MyLjEzMywyMy40NjcsMjQuNTMzLDQwLjUzMyw0OCwzNi4yNjdjMjEuMzMzLTQuMjY3LDM1LjItMjQuNTMzLDMzLjA2Ny00NS44NjcgIGwtMjAuMjY3LTIyOS4zMzNjLTIuMTMzLTI3LjczMyw4LjUzMy01My4zMzMsMjcuNzMzLTcyLjUzM2MxMS43MzMtMTEuNzMzLDE5LjItMjguOCwxOS4yLTQ2LjkzM1Y5LjczNyAgQzI3My43NzcsNC40MDQsMjY5LjUxLDAuMTM3LDI2NC4xNzcsMC4xMzd6Ii8+CjxwYXRoIHN0eWxlPSJmaWxsOiM0MDU5NkI7IiBkPSJNMjI3LjkxLDI0MC4xMzdoLTQwLjUzM2wtMjAuMjY3LDIyNy4yYzAsMi4xMzMsMCw1LjMzMywwLDcuNDY3ICBjMi4xMzMsMjMuNDY3LDI0LjUzMyw0MC41MzMsNDgsMzYuMjY3YzIxLjMzMy00LjI2NywzNS4yLTI0LjUzMywzMy4wNjctNDUuODY3TDIyNy45MSwyNDAuMTM3eiIvPgo8cGF0aCBzdHlsZT0iZmlsbDojRjJGMkYyOyIgZD0iTTM1NS45MSwwLjEzN2MwLDAtNDUuODY3LDE4LjEzMy02NS4wNjcsMTU1LjczM2MtNy40NjcsNTYuNTMzLDQuMjY3LDExMiwyNS42LDE2NC4yNjcgIGMyLjEzMyw1LjMzMywzLjIsMTEuNzMzLDMuMiwxOC4xMzNsLTEyLjgsMTM3LjZjMCwyLjEzMywwLDQuMjY3LDAsNi40YzIuMTMzLDE4LjEzMywxOC4xMzMsMzIsMzcuMzMzLDI5Ljg2NyAgYzE3LjA2Ny0yLjEzMywyOC44LTIwLjI2NywyNy43MzMtMzcuMzMzTDM1NS45MSwwLjEzN3oiLz4KPHBhdGggc3R5bGU9ImZpbGw6I0ZGNzA1ODsiIGQ9Ik0zMTkuNjQ0LDMzNy4yMDRjMCwxLjA2NywwLDEuMDY3LDAsMi4xMzNsLTEyLjgsMTM3LjZjMCwyLjEzMywwLDQuMjY3LDAsNi40ICBjMi4xMzMsMTguMTMzLDE4LjEzMywzMiwzNy4zMzMsMjkuODY3YzE3LjA2Ny0yLjEzMywyOC44LTIwLjI2NywyNy43MzMtMzcuMzMzbC00LjI2Ny0xMzcuNmgtNDhWMzM3LjIwNHoiLz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=="/>
+                            <label for="dinner" class="radio-tile-label">Dinner</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="recognition-item">
+                <div class="title">Calorie Detail</div>
+                <div class="calorie-list">
+                </div>
+            </div>
+            <div class="total-calorie-item">
+                <div>In Total</div>
+                <div class="total-calorie">
+                    <span id="total-calorie">0</span>&nbsp;Calories
+                </div>
+            </div>
+            <div class="checkout-section">
+                <div class="cancel-btn" onclick="window.location.reload()">
+                    Cancel this recognition
+                </div>
+                <div class="add-record-btn">
+                    Add to Record
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/axios/dist/axios.standalone.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/CryptoJS/rollups/sha256.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/CryptoJS/components/hmac.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/CryptoJS/components/enc-base64.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/url-template/url-template.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/apiGatewayCore/sigV4Client.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/apiGatewayCore/apiGatewayClient.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/apiGatewayCore/simpleHttpClient.js"></script>
+<script type="text/javascript"
+        src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/lib/apiGatewayCore/utils.js"></script>
+<script type="text/javascript" src="https://sl4264-bucket.s3.us-east-2.amazonaws.com/apigClient.js"></script>
+<script type="text/javascript" src="index.js"></script>
+</body>
+</html>

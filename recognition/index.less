@@ -1,0 +1,246 @@
+.recognition-content {
+  width: 100%;
+  box-sizing: border-box;
+  background: white;
+  min-height: 100vh;
+  animation: loading-in .5s ease-in-out;
+  font-size: 1.5em;
+  padding: 5em 10em;
+}
+
+@keyframes loading-in {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.recognition-wrapper {
+  display: flex;
+
+  .file-upload {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    width: 100%;
+    height: 50vh;
+    border-radius: 15px;
+    position: relative;
+
+    .file-upload-content {
+      display: none;
+      text-align: center;
+      position: relative;
+      height: 100%;
+      width: 100%;
+
+      .recognition-canvas {
+        position: absolute;
+      }
+    }
+
+    .file-upload-input {
+      position: absolute;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      outline: none;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .image-upload-wrap {
+      border: 4px dashed #34a853;
+      position: relative;
+      height: 100%;
+    }
+
+    .image-dropping,
+    .image-upload-wrap:hover {
+      background-color: #34a853;
+      border: 4px dashed #ffffff;
+    }
+
+    .drag-text {
+      display: flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+
+      h3 {
+        font-weight: 100;
+        text-transform: uppercase;
+        color: #15824B;
+        padding: 60px 0;
+      }
+    }
+
+    .file-upload-image {
+      width: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .recognition-result {
+    text-align: center;
+    width: 100%;
+
+    .recognition-item {
+      margin-bottom: 1em;
+
+      .calorie-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: .5em 2em;
+        padding: 1em;
+        border-radius: 15px;
+        box-sizing: border-box;
+        box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+        position: relative;
+
+        .delete-item {
+          position: absolute;
+          top: 5px;
+          right: 10px;
+          cursor: pointer;
+        }
+
+        .calorie-detail {
+          .h-calorie {
+            font-size: .65em;
+            color: #c93c4f;
+          }
+        }
+
+        .calorie-num-detail {
+          display: flex;
+          align-items: center;
+          font-size: .85em;
+
+          .calorie-item-total-num {
+            color: #c93c4f;
+          }
+        }
+
+        .calorie-input {
+          margin-right: 10px;
+          height: 100%;
+          width: 100px;
+          padding: 10px;
+        }
+      }
+    }
+
+    .total-calorie-item {
+      margin: .5em 2em;
+      display: flex;
+      justify-content: space-between;
+
+      .total-calorie {
+        color: #c93c4f;
+      }
+    }
+  }
+
+  .radio-tile-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    //set dimensions for invisible container
+    .input-container {
+      position: relative;
+      height: 130px;
+      width: 130px;
+      margin: .5em;
+
+      //make actual radio input invisible
+      // + stretch to fill container
+      .radio-button {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        cursor: pointer;
+      }
+
+      //default tile styles
+      .radio-tile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        border-radius: 15px;
+        padding: 15px;
+        transition: transform 300ms ease;
+        box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+
+        img {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .radio-tile-label {
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8em;
+        color: #1AA059;
+      }
+
+      //active tile styles
+      .radio-button:checked + .radio-tile {
+        background-color: #1AA059;
+        border: 2px solid #1AA059;
+        color: white;
+        transform: scale(1.1, 1.1);
+
+        .icon svg {
+          fill: white;
+          background-color: #1AA059;
+        }
+
+        .radio-tile-label {
+          color: white;
+          background-color: #1AA059;
+        }
+      }
+    }
+  }
+}
+
+.checkout-section {
+  display: flex;
+  justify-content: space-between;
+  margin: 2em;
+  font-size: .9em;
+
+  .add-record-btn {
+    margin-left: 1em;
+    border-radius: 25px;
+    background: #1AA059;
+    color: white;
+    padding: .35em 2em;
+    cursor: pointer;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  }
+
+  .cancel-btn {
+    border-radius: 25px;
+    background: #939393;
+    color: white;
+    padding: .35em 1.5em;
+    cursor: pointer;
+    box-shadow: 0 1px 6px 0 rgba(32, 33, 36, 0.28);
+  }
+}
