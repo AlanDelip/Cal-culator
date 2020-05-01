@@ -9,7 +9,7 @@ $(() => {
             data: JSON.stringify({
                 username: name
             }),
-            contentType: 'application/json'
+            contentType: 'applications'
         }).done(res => {
             localStorage.setItem("username", name);
             location.href = "/recognition/index.html";
